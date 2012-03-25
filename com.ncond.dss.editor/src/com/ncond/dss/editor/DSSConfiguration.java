@@ -10,7 +10,7 @@ import org.eclipse.jface.text.rules.Token;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewerConfiguration;
 
-import com.ncond.dss.editor.scanner.DSSPartitionScanner;
+import com.ncond.dss.editor.scanner.DSSPartitionTokenScanner;
 
 public class DSSConfiguration extends SourceViewerConfiguration {
 
@@ -26,8 +26,8 @@ public class DSSConfiguration extends SourceViewerConfiguration {
 	public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) {
 		return new String[] {
 			IDocument.DEFAULT_CONTENT_TYPE,
-			DSSPartitionScanner.DSS_COMMENT,
-			DSSPartitionScanner.DSS_INLINE_COMMENT
+			DSSPartitionTokenScanner.DSS_COMMENT,
+			DSSPartitionTokenScanner.DSS_INLINE_COMMENT
 		};
 	}
 
@@ -65,12 +65,12 @@ public class DSSConfiguration extends SourceViewerConfiguration {
 		PresentationReconciler reconciler = new PresentationReconciler();
 
 		DefaultDamagerRepairer dr = new DefaultDamagerRepairer(getDSSCommentScanner());
-		reconciler.setDamager(dr, DSSPartitionScanner.DSS_COMMENT);
-		reconciler.setRepairer(dr, DSSPartitionScanner.DSS_COMMENT);
+		reconciler.setDamager(dr, DSSPartitionTokenScanner.DSS_COMMENT);
+		reconciler.setRepairer(dr, DSSPartitionTokenScanner.DSS_COMMENT);
 
 		dr = new DefaultDamagerRepairer(getDSSInlineCommentScanner());
-		reconciler.setDamager(dr, DSSPartitionScanner.DSS_INLINE_COMMENT);
-		reconciler.setRepairer(dr, DSSPartitionScanner.DSS_INLINE_COMMENT);
+		reconciler.setDamager(dr, DSSPartitionTokenScanner.DSS_INLINE_COMMENT);
+		reconciler.setRepairer(dr, DSSPartitionTokenScanner.DSS_INLINE_COMMENT);
 
 		dr = new DefaultDamagerRepairer(getDSSScanner());
 		reconciler.setDamager(dr, IDocument.DEFAULT_CONTENT_TYPE);
