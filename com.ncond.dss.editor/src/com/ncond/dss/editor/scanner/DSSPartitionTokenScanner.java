@@ -45,15 +45,21 @@ public class DSSPartitionTokenScanner implements IPartitionTokenScanner {
 			length = document.getLineLength(lineNum);
 			line = document.get(offset, length);
 		} catch (BadLocationException e) {
+			System.err.println("nextToken, bad location: " + offset);
 			return Token.EOF;
 		}
 
 		parser.setCmdBuffer(line);
+
 		key = parser.getNextParam();
 		value = parser.makeString();
+
 		idx = ExecCommands.commandList.getCommand(value);
 
 		switch (idx) {
+		case -1:
+			token = new Token(IDocument.DEFAULT_CONTENT_TYPE);
+			break;
 		case 18:
 			token = new Token(DSS_COMMENT);
 			break;
@@ -67,15 +73,19 @@ public class DSSPartitionTokenScanner implements IPartitionTokenScanner {
 	}
 
 	public int getTokenOffset() {
+		System.out.println("getTokenOffset: " + tokenOffset);
 		return tokenOffset;
 	}
 
 	public int getTokenLength() {
+		int length;
 		if (offset < end) {
-			return offset - tokenOffset;
+			length = offset - tokenOffset;
 		} else {
-			return end - tokenOffset;
+			length = end - tokenOffset;
 		}
+		System.out.println("getTokenLength: " + length);
+		return length;
 	}
 
 	public void setPartialRange(IDocument document, int offset, int length,
